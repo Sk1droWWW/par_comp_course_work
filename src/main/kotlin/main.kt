@@ -1,4 +1,8 @@
 import java.io.File
+import java.util.ArrayList
+
+
+
 
 val invIndex  = mutableMapOf<String, MutableList<Location>>()
 val fileNames = mutableListOf<String>()
@@ -13,6 +17,7 @@ fun indexFile(fileName: String) {
         println("'$fileName' already indexed")
         return
     }
+
     fileNames.add(fileName)
     File(fileName).forEachLine { line ->
         for ((i, w) in line.toLowerCase().split(splitter).withIndex()) {
@@ -38,13 +43,36 @@ fun findWord(word: String) {
     println()
 }
 
+fun getFileNamesList(): MutableList<String> {
+    val results: MutableList<String> = ArrayList()
+    val pathList = arrayListOf(
+        "src/main/resources/test/neg/",
+        "src/main/resources/test/pos/",
+        "src/main/resources/train/neg/",
+        "src/main/resources/train/pos/",
+        "src/main/resources/train/unsup/")
+
+    for (p in pathList) {
+        val files = File(p).listFiles()
+
+        for (f in files) {
+            if (f.isFile) {
+                results.add(p + f.name)
+            }
+        }
+    }
+
+    return results
+}
+
 fun main(args: Array<String>) {
-    val PATH: String = "src/main/resources/"
-    println("Enter file names")
+    println("File names reading")
 
-    val stringInput: String = readLine()!!
+    val fileNames = getFileNamesList()
 
-    for (arg in stringInput.split(" ")) indexFile(PATH + arg)
+    for (fn in fileNames) {
+        indexFile(fn)
+    }
     println()
     println("Enter word(s) to be searched for in these files or 'q' to quit")
     while (true) {
@@ -54,4 +82,5 @@ fun main(args: Array<String>) {
         findWord(word)
     }
 }
+
 

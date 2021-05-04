@@ -1,10 +1,9 @@
 import java.io.File
 import java.util.ArrayList
+import java.util.concurrent.ConcurrentHashMap
 
 
-
-
-val invIndex  = mutableMapOf<String, MutableList<Location>>()
+val invIndex  = ConcurrentHashMap<String, MutableList<Location>>(16, 0.75f, 16)
 val fileNames = mutableListOf<String>()
 val splitter  = Regex("""\W+""")
 
@@ -65,14 +64,34 @@ fun getFileNamesList(): MutableList<String> {
     return results
 }
 
+fun indexCreatingParallel(threads_number: Int,
+                          fileNamesList: MutableList<String>) {
+    val threadArray: Array<ThreadIndex?> = arrayOfNulls(threads_number)
+    val size = fileNamesList.size
+
+    for (i in 0 until threads_number) {
+        threadArray[i] = ThreadIndex(
+            fileNamesList,
+            (size / threads_number) * i,
+            if (i == threads_number - 1) size else size / threads_number * (i + 1)
+        )
+        threadArray[i]!!.start()
+    }
+
+    for (i in 0 until threads_number) {
+        threadArray[i]!!.join()
+    }
+}
+
 fun main(args: Array<String>) {
     println("File names reading")
 
-    val fileNames = getFileNamesList()
+    val fileNamesList = getFileNamesList()
 
-    for (fn in fileNames) {
+    indexCreatingParallel(16, fileNamesList)
+    /*for (fn in fileNames) {
         indexFile(fn)
-    }
+    }*/
     println()
     println("Enter word(s) to be searched for in these files or 'q' to quit")
     while (true) {

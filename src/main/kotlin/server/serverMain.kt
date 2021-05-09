@@ -1,9 +1,9 @@
 package server
 
-import java.io.*
+import java.io.File
 import java.net.ServerSocket
 import java.net.Socket
-import java.util.ArrayList
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 
@@ -13,7 +13,8 @@ private val pathList = arrayListOf(
     "src/main/resources/test/pos/",
     "src/main/resources/train/neg/",
     "src/main/resources/train/pos/",
-    "src/main/resources/train/unsup/")
+    "src/main/resources/train/unsup/"
+)
 
 private fun getFileNamesList(): MutableList<String> {
     val results: MutableList<String> = ArrayList()
@@ -31,8 +32,10 @@ private fun getFileNamesList(): MutableList<String> {
     return results
 }
 
-private fun indexCreatingParallel(threadsNumber: Int,
-                          fileNamesList: MutableList<String>) {
+private fun indexCreatingParallel(
+    threadsNumber: Int,
+    fileNamesList: MutableList<String>
+) {
     val threadArray: Array<ThreadIndex?> = arrayOfNulls(threadsNumber)
     val size = fileNamesList.size
 

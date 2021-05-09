@@ -68,7 +68,7 @@ fun main() {
         try {
             dis.close()
             dos.close()
-        } catch(ex: IOException) {
+        } catch (ex: IOException) {
             System.err.print(ex.printStackTrace().toString())
         }
     }

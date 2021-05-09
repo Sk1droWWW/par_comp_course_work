@@ -2,8 +2,6 @@ package server
 
 import java.io.*
 import java.net.Socket
-import java.io.DataOutputStream
-import java.io.DataInputStream
 
 
 class ClientHandler(private val clientSocket: Socket) : Runnable {
@@ -35,7 +33,7 @@ class ClientHandler(private val clientSocket: Socket) : Runnable {
         try {
             dis.close()
             dos.close()
-        } catch(ex: IOException) {
+        } catch (ex: IOException) {
             System.err.print(ex.printStackTrace().toString())
         }
     }

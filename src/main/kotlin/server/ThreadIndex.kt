@@ -2,10 +2,12 @@ package server
 
 import java.io.File
 
-class ThreadIndex(private val fileNamesList: MutableList<String>,
-                  private val startIndex: Int,
-                  private val endIndex: Int) : Thread() {
-    private val splitter  = Regex("""\W+""")
+class ThreadIndex(
+    private val fileNamesList: MutableList<String>,
+    private val startIndex: Int,
+    private val endIndex: Int
+) : Thread() {
+    private val splitter = Regex("""\W+""")
     private val fileNames = mutableListOf<String>()
 
     override fun run() {

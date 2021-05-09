@@ -59,6 +59,7 @@ fun main(args: Array<String>) {
                     os!!.println(word)
                     print(receiveSearchResult())
                 } else {
+                    sock!!.close()
                     System.exit(1)
                 }
             }

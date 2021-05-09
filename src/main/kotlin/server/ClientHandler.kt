@@ -14,8 +14,8 @@ class ClientHandler(private val clientSocket: Socket) : Runnable {
         try {
             var clientSelection: String
             while (true) {
-                clientSelection = dis.readUTF()
                 println("Read input from client : $clientSocket")
+                clientSelection = dis.readUTF()
 
                 clientSelection = clientSelection.toLowerCase()
                 if (clientSelection == "q") {
@@ -40,11 +40,24 @@ class ClientHandler(private val clientSocket: Socket) : Runnable {
         }
     }
 
+    private fun findWord(word: String): String {
+        val w = word.toLowerCase()
+        val searchResult: String
+        val locations = invIndex?.get(w)
+
+        searchResult = locations?.joinToString("\n") { "    $it" }
+            ?: "\n'$word' not found"
+
+        return searchResult + "\n"
+    }
+
     private fun sendSearchResult(searchResult: String, dos: DataOutputStream) {
         try {
             val myByteArray = ByteArray(searchResult.length)
+
             val bis = BufferedInputStream(ByteArrayInputStream(searchResult.encodeToByteArray()))
             val dis = DataInputStream(bis)
+
             dis.readFully(myByteArray, 0, myByteArray.size)
 
             dos.writeLong(myByteArray.size.toLong())

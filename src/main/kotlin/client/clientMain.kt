@@ -5,8 +5,8 @@ import java.net.Socket
 import kotlin.math.min
 
 
-var sock: Socket? = null
-var stdin: BufferedReader? = null
+private var sock: Socket? = null
+private var stdin: BufferedReader? = null
 
 private fun receiveSearchResult(dis: DataInputStream): String? {
     var searchResult: String? = null
@@ -34,7 +34,7 @@ private fun receiveSearchResult(dis: DataInputStream): String? {
     return searchResult
 }
 
-fun main(args: Array<String>) {
+fun main() {
     try {
         sock = Socket("localhost", 25445)
         stdin = BufferedReader(InputStreamReader(System.`in`))
@@ -62,7 +62,7 @@ fun main(args: Array<String>) {
                 }
             }
         } catch (e: Exception) {
-            System.err.println("not valid input")
+            System.err.println("Error")
         }
 
         try {

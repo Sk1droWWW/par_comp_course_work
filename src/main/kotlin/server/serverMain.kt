@@ -5,6 +5,7 @@ import java.net.ServerSocket
 import java.net.Socket
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.system.measureTimeMillis
 
 
 var invIndex: ConcurrentHashMap<String, MutableList<Location>>? = null
@@ -68,9 +69,14 @@ fun main() {
     println("File names reading")
     val fileNamesList = getFileNamesList()
 
-    invIndex = ConcurrentHashMap<String, MutableList<Location>>(16, 0.75f, 16)
-    indexCreatingParallel(16, fileNamesList)
-    println("Index created\n")
+    println("Enter number of threads: ")
+    val threadsNumber = Scanner(System.`in`).nextInt()
+
+    invIndex = ConcurrentHashMap<String, MutableList<Location>>(16, 0.75f, threadsNumber)
+    val timeInMillis = measureTimeMillis {
+        indexCreatingParallel(threadsNumber, fileNamesList)
+    }
+    println("Index created by $threadsNumber threads in : $timeInMillis sec")
 
     while (true) {
         try {

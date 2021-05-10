@@ -17,7 +17,7 @@ private val pathList = arrayListOf(
     "src/main/resources/train/unsup/"
 )
 
-private fun getFileNamesList(): MutableList<String> {
+fun getFileNamesList(): MutableList<String> {
     val results: MutableList<String> = ArrayList()
 
     for (p in pathList) {
@@ -33,9 +33,10 @@ private fun getFileNamesList(): MutableList<String> {
     return results
 }
 
-private fun indexCreatingParallel(
+fun indexCreatingParallel(
     threadsNumber: Int,
-    fileNamesList: MutableList<String>
+    fileNamesList: MutableList<String>,
+    index: ConcurrentHashMap<String, MutableList<Location>>?
 ) {
     val threadArray: Array<ThreadIndex?> = arrayOfNulls(threadsNumber)
     val size = fileNamesList.size
@@ -43,6 +44,7 @@ private fun indexCreatingParallel(
     for (i in 0 until threadsNumber) {
         threadArray[i] = ThreadIndex(
             fileNamesList,
+            index,
             (size / threadsNumber) * i,
             if (i == threadsNumber - 1) size else size / threadsNumber * (i + 1)
         )
@@ -72,9 +74,10 @@ fun main() {
     println("Enter number of threads: ")
     val threadsNumber = Scanner(System.`in`).nextInt()
 
-    invIndex = ConcurrentHashMap<String, MutableList<Location>>(16, 0.75f, threadsNumber)
+    invIndex = ConcurrentHashMap<String,
+            MutableList<Location>>(16, 0.75f, threadsNumber)
     val timeInMillis = measureTimeMillis {
-        indexCreatingParallel(threadsNumber, fileNamesList)
+        indexCreatingParallel(threadsNumber, fileNamesList, invIndex)
     }
     println("Index created by $threadsNumber threads in : $timeInMillis sec")
 

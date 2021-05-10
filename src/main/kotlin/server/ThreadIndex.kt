@@ -1,9 +1,11 @@
 package server
 
 import java.io.File
+import java.util.concurrent.ConcurrentHashMap
 
 class ThreadIndex(
     private val fileNamesList: MutableList<String>,
+    private val index: ConcurrentHashMap<String, MutableList<Location>>?,
     private val startIndex: Int,
     private val endIndex: Int
 ) : Thread() {
@@ -25,10 +27,10 @@ class ThreadIndex(
         fileNames.add(fileName)
         File(fileName).forEachLine { line ->
             for ((i, w) in line.toLowerCase().split(splitter).withIndex()) {
-                var locations = invIndex?.get(w)
+                var locations = index?.get(w)
                 if (locations == null) {
                     locations = mutableListOf<Location>()
-                    invIndex?.put(w, locations)
+                    index?.put(w, locations)
                 }
                 locations.add(Location(fileName, i + 1))
             }

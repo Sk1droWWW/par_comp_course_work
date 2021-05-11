@@ -1,20 +1,36 @@
 import server.Location
 import server.getFileNamesList
 import server.indexCreatingParallel
+import server.pathList
+import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.system.measureTimeMillis
 
-const val MAX_THREADS_NUMBER = 100
+const val MAX_THREADS_NUMBER = 1000
 
 fun main() {
-    println("File names reading")
-    val fileNamesList = getFileNamesList()
+    var results = ""
+    var columnNames = "Threads number"
 
-    var results = "Index created by 1 thread in : ${invIndexCreating(fileNamesList, 1)} sec\n"
-    for (i in 2..MAX_THREADS_NUMBER step 4) {
-        results += "Index created by $i threads in : ${invIndexCreating(fileNamesList, i)} millis\n"
+    results += "1"
+    for (i in 1..5) {
+        val fileNamesList = getFileNamesList(pathList.takeLast(i))
+        columnNames += "\t${fileNamesList.size} files"
+
+        results += "\t${invIndexCreating(fileNamesList, 1)}"
     }
-    println(results)
+    results += "\n"
+
+    for (j in 2..MAX_THREADS_NUMBER step 10) {
+        results += "$j"
+        for (i in 1..5) {
+            val fileNamesList = getFileNamesList(pathList.takeLast(i))
+            results += "\t${invIndexCreating(fileNamesList, j)}"
+        }
+        results += "\n"
+    }
+
+    println(columnNames + "\n" + results)
 }
 
 private fun invIndexCreating(

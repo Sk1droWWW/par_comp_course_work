@@ -1,0 +1,109 @@
+{
+	"type": "serial",
+	"categoryField": "Threads number",
+	"autoMarginOffset": 40,
+	"marginRight": 60,
+	"marginTop": 60,
+	"startDuration": 1,
+	"accessibleTitle": "",
+	"fontSize": 13,
+	"theme": "black",
+	"categoryAxis": {
+		"gridPosition": "start",
+		"title": "Threads Number",
+		"titleFontSize": 11
+	},
+	"trendLines": [],
+	"graphs": [
+		{
+			"id": "AmGraph-2",
+			"title": "",
+			"type": "smoothedLine",
+			"valueField": "1000 files",
+			"visibleInLegend": false
+		},
+		{
+			"customMarker": "",
+			"id": "AmGraph-3",
+			"legendPeriodValueText": "",
+			"legendValueText": "",
+			"title": "graph 3",
+			"type": "smoothedLine",
+			"valueField": "1250 files"
+		},
+		{
+			"id": "AmGraph-4",
+			"title": "graph 4",
+			"type": "smoothedLine",
+			"valueField": "1500 files"
+		},
+		{
+			"id": "AmGraph-5",
+			"title": "graph 5",
+			"type": "smoothedLine",
+			"valueField": "1750 files"
+		},
+		{
+			"bulletHitAreaSize": 1,
+			"customMarker": "",
+			"id": "AmGraph-6",
+			"legendPeriodValueText": "",
+			"legendValueText": "",
+			"markerType": "square",
+			"title": "graph 6",
+			"type": "smoothedLine",
+			"valueField": "2000 files"
+		}
+	],
+	"guides": [],
+	"valueAxes": [
+		{
+			"id": "ValueAxis-1",
+			"title": "Time in millis",
+			"titleFontSize": 12
+		}
+	],
+	"allLabels": [
+		{
+			"color": "#DE4C4F",
+			"id": "1000",
+			"text": "1000 files",
+			"x": 200,
+			"y": 20
+		},
+		{
+			"color": "#D8854F",
+			"id": "1250",
+			"text": "1250 files",
+			"x": 400,
+			"y": 20
+		},
+		{
+			"color": "#EEA638",
+			"id": "1500",
+			"size": 12,
+			"text": "1500 files",
+			"x": 600,
+			"y": 20
+		},
+		{
+			"color": "#A7A737",
+			"id": "1750",
+			"text": "1750 files",
+			"x": 800,
+			"y": 20
+		},
+		{
+			"color": "#86A965",
+			"id": "2000",
+			"text": "2000 files",
+			"x": 1000,
+			"y": 20
+		}
+	],
+	"balloon": {},
+	"titles": [],
+	"dataProvider": [
+		
+	]
+}

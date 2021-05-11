@@ -2,11 +2,10 @@ import server.Location
 import server.getFileNamesList
 import server.indexCreatingParallel
 import server.pathList
-import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.system.measureTimeMillis
 
-const val MAX_THREADS_NUMBER = 1000
+const val MAX_THREADS_NUMBER = 60
 
 fun main() {
     var results = ""
@@ -21,7 +20,7 @@ fun main() {
     }
     results += "\n"
 
-    for (j in 2..MAX_THREADS_NUMBER step 10) {
+    for (j in 2..MAX_THREADS_NUMBER step 4) {
         results += "$j"
         for (i in 1..5) {
             val fileNamesList = getFileNamesList(pathList.takeLast(i))

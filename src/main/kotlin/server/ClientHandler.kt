@@ -2,6 +2,7 @@ package server
 
 import java.io.*
 import java.net.Socket
+import java.util.*
 
 
 class ClientHandler(private val clientSocket: Socket) : Runnable {
@@ -15,7 +16,7 @@ class ClientHandler(private val clientSocket: Socket) : Runnable {
                 println("Read input from client : $clientSocket")
                 clientSelection = dis.readUTF()
 
-                clientSelection = clientSelection.toLowerCase()
+                clientSelection = clientSelection.lowercase(Locale.getDefault())
                 if (clientSelection == "q") {
                     System.exit(1)
                 } else {
@@ -39,7 +40,7 @@ class ClientHandler(private val clientSocket: Socket) : Runnable {
     }
 
     private fun findWord(word: String): String {
-        val w = word.toLowerCase()
+        val w = word.lowercase(Locale.getDefault())
         val searchResult: String
         val locations = invIndex?.get(w)
 

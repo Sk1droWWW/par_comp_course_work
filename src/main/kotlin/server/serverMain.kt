@@ -9,7 +9,7 @@ import kotlin.system.measureTimeMillis
 
 
 var invIndex: ConcurrentHashMap<String, MutableList<Location>>? = null
-private val pathList = arrayListOf(
+val pathList = arrayListOf(
     "src/main/resources/test/neg/",
     "src/main/resources/test/pos/",
     "src/main/resources/train/neg/",
@@ -17,7 +17,7 @@ private val pathList = arrayListOf(
     "src/main/resources/train/unsup/"
 )
 
-fun getFileNamesList(): MutableList<String> {
+fun getFileNamesList(pathList: List<String>): MutableList<String> {
     val results: MutableList<String> = ArrayList()
 
     for (p in pathList) {
@@ -69,7 +69,7 @@ fun main() {
     }
 
     println("File names reading")
-    val fileNamesList = getFileNamesList()
+    val fileNamesList = getFileNamesList(pathList)
 
     println("Enter number of threads: ")
     val threadsNumber = Scanner(System.`in`).nextInt()
@@ -79,7 +79,7 @@ fun main() {
     val timeInMillis = measureTimeMillis {
         indexCreatingParallel(threadsNumber, fileNamesList, invIndex)
     }
-    println("Index created by $threadsNumber threads in : $timeInMillis sec")
+    println("Index created by $threadsNumber threads in : $timeInMillis millis")
 
     while (true) {
         try {
